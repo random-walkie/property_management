@@ -1,6 +1,8 @@
 package com.mycompany.property_management.controller;
 
 import com.mycompany.property_management.dto.PropertyDTO;
+import com.mycompany.property_management.service.PropertyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -19,6 +21,12 @@ by URL, HTTP method, request parameters, headers, and media types. You can use i
 @RequestMapping("/api/v1")
 public class PropertyController {
 
+    private final PropertyService propertyService;
+
+    public PropertyController(PropertyService propertyService) {
+        this.propertyService = propertyService;
+    }
+
     // Annotation for mapping HTTP GET requests onto specific handler methods.
     @GetMapping("/hello")
     public String sayHello(){
@@ -27,6 +35,7 @@ public class PropertyController {
 
     @PostMapping("/properties")
     public PropertyDTO saveProperty(@RequestBody PropertyDTO propertyDTO){
+        propertyService.saveProperty(propertyDTO);
         System.out.println(propertyDTO);
         return propertyDTO;
     }
